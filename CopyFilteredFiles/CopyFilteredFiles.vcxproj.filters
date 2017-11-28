@@ -97,7 +97,4 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="GetCppSrcFiles.rc" />
-  </ItemGroup>
 </Project>
