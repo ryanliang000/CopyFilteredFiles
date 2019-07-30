@@ -12,7 +12,7 @@ GetCppSrcFiles::GetCppSrcFiles(QWidget *parent)
 
     ui.editSrcPath->setText("");
     ui.editDestPath->setText(""); 
-	ui.editFileTails->setText("h;cpp;vcxproj;sln;bat;filters;proj;ui;qrc;res;ts;hpp;lib;dll;py");
+	ui.editFileTails->setText("h;cpp;vcxproj;sln;bat;filters;proj;ui;qrc;res;ts;hpp;lib;py");
 }
 
 GetCppSrcFiles::~GetCppSrcFiles()
