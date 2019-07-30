@@ -1,11 +1,12 @@
 #include "CopyTask.h"
-
-void CopyDirsEx(QString sSrcPath, QString sDestPath, QStringList& listFileTails)
+const static bool gs_bIsDeleteEmptyDir = true;
+int CopyDirsEx(QString sSrcPath, QString sDestPath, QStringList& listFileTails)
 {
+	int nProcessFiles = 0;
     // 目录打开并检查
     QDir dirSrc(sSrcPath);
     if (!dirSrc.exists())
-        return;
+        return nProcessFiles;
 
     // 设置过滤类型与文件排序方式
     dirSrc.setFilter(QDir::Dirs|QDir::Files);
@@ -34,14 +35,14 @@ void CopyDirsEx(QString sSrcPath, QString sDestPath, QStringList& listFileTails)
         bool bIsDir = fileInfo.isDir();
         if (bIsDir)
         {
-            CopyDirsEx(sSrcPath + "\\" + fileInfo.fileName(), sDestPath + "\\" + fileInfo.fileName(), listFileTails);
+			nProcessFiles += CopyDirsEx(sSrcPath + "\\" + fileInfo.fileName(), sDestPath + "\\" + fileInfo.fileName(), listFileTails);
         }
         else
         {
             if (listFileTails.contains(fileInfo.suffix()))
             {
                 bool bRt = QFile::copy(sSrcPath  + "\\" + fileInfo.fileName(), sDestPath +  "\\" + fileInfo.fileName());
-
+				nProcessFiles++;
                 if (!bRt)
                 {
                     QString sDebugInfo = QString("Copy %1 to %2 rt=%3")
@@ -53,6 +54,10 @@ void CopyDirsEx(QString sSrcPath, QString sDestPath, QStringList& listFileTails)
             }
         }
     }
+	if (gs_bIsDeleteEmptyDir && nProcessFiles == 0)
+		QDir().rmdir(sDestPath);
+
+	return nProcessFiles;
 }
 
 void MyCopyThread::run()
