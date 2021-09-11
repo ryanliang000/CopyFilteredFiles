@@ -18,6 +18,7 @@ public slots:
     void onSelectSrc();
     void onSelectDest();
     void onOption();
+	void onAbout();
 private:
     Ui::GetCppSrcFilesClass ui;
 

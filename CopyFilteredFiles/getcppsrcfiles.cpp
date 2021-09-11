@@ -9,6 +9,7 @@ GetCppSrcFiles::GetCppSrcFiles(QWidget *parent)
     connect(ui.btnCancel, SIGNAL(pressed()), SLOT(close()));
     connect(ui.btnSelectSrc, SIGNAL(pressed()), SLOT(onSelectSrc()));
     connect(ui.btnSelectDest, SIGNAL(pressed()), SLOT(onSelectDest()));
+	connect(ui.btnAbout, SIGNAL(pressed()), SLOT(onAbout()));
 
     ui.editSrcPath->setText("");
     ui.editDestPath->setText(""); 
@@ -91,4 +92,8 @@ void GetCppSrcFiles::onOption()
 
 }
 
-
+#include "qdesktopservices.h"
+void GetCppSrcFiles::onAbout()
+{
+	QDesktopServices::openUrl(QUrl(QLatin1String("https://github.com/rainliang000/CopyFilteredFiles")));
+}
